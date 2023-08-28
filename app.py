@@ -51,7 +51,7 @@ client = cosmos_client.CosmosClient(url, {'masterKey': key})
 
 database_id = 'SampleTestDB'
 container_id = 'Test'
-container = client.ReadContainer("dbs/" + database_id + "/colls/" + container_id)
+# container = client.ReadContainer("dbs/" + database_id + "/colls/" + container_id)
 
 st.title("Azure Cosmos DB with Streamlit")
 
