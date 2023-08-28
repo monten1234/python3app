@@ -1,5 +1,6 @@
 import streamlit as st
 from azure.cosmos import CosmosClient, PartitionKey
+import azure.cosmos.cosmos_client as cosmos_client
 
 # Azure Cosmos DBの設定
 URL = 'https://adachitakehirodemo3.documents.azure.com:443/'
@@ -11,7 +12,7 @@ client = CosmosClient(URL, credential=KEY)
 database = client.get_database_client(DATABASE_NAME)
 container = database.get_container_client(CONTAINER_NAME)
 
-st.title("Azure Cosmos DB with Streamlit")
+st.title("Azure Cosmos DB with Streamlit!")
 
 # データのアップロード
 st.subheader("Upload Data to Cosmos DB")
