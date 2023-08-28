@@ -1,4 +1,4 @@
 streamlit
 azure-storage-blob
 openai
-azure-cosmos==3.6
+azure-cosmos==3.2
