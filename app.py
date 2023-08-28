@@ -39,31 +39,69 @@
 #     else:
 #         st.warning(f"No data found for key: {query_key}")
 
+# import streamlit as st
+# import azure.cosmos.cosmos_client as cosmos_client
+# import azure.cosmos.errors as errors
+# import azure.cosmos.http_constants as http_constants
+
+# import os
+# url = os.environ['https://adachitakehirodemo3.documents.azure.com:443/']
+# key = os.environ['C7Z6MXR3EUj5DGngcK4dF84ZZr0yfjPhZPCheo635tFgbUIbZ3GZJG3MWD3lis5PDkHAW63w7BAZACDbPuTKGw==']
+# client = cosmos_client.CosmosClient(url, {'masterKey': key})
+
+# database_id = 'SampleTestDB'
+# container_id = 'Test'
+# # container = client.ReadContainer("dbs/" + database_id + "/colls/" + container_id)
+
+# st.title("Azure Cosmos DB with Streamlit")
+
+# # データのアップロード
+# st.subheader("Upload Data to Cosmos DB")
+# data_key = st.text_input("Enter a key:")
+# data_value = st.text_input("Enter a value:")
+
+# if st.button("Upload"):
+#     item_body = {
+#         "id": data_key,
+#         "value": data_value
+#     }
+#     client.UpsertItem("dbs/" + database_id + "/colls/" + container_id,item_body)
+#     st.success(f"Uploaded data with key: {data_key}")
+
 import streamlit as st
-import azure.cosmos.cosmos_client as cosmos_client
-import azure.cosmos.errors as errors
-import azure.cosmos.http_constants as http_constants
+from azure.cosmos import CosmosClient
 
-import os
-url = os.environ['https://adachitakehirodemo3.documents.azure.com:443/']
-key = os.environ['C7Z6MXR3EUj5DGngcK4dF84ZZr0yfjPhZPCheo635tFgbUIbZ3GZJG3MWD3lis5PDkHAW63w7BAZACDbPuTKGw==']
-client = cosmos_client.CosmosClient(url, {'masterKey': key})
+# Cosmos DBの接続情報
+URL = "YOUR_COSMOS_DB_URL"
+KEY = "YOUR_COSMOS_DB_KEY"
+DATABASE_ID = "YOUR_DATABASE_ID"
+COLLECTION_ID = "YOUR_COLLECTION_ID"
 
-database_id = 'SampleTestDB'
-container_id = 'Test'
-# container = client.ReadContainer("dbs/" + database_id + "/colls/" + container_id)
+# Cosmos DBクライアントの初期化
+client = CosmosClient(URL, {'masterKey': KEY})
 
-st.title("Azure Cosmos DB with Streamlit")
+# Streamlit アプリ
+def main():
+    st.title('Cosmos DB Data Uploader')
+    
+    # ユーザー入力を収集
+    item_id = st.text_input('Enter Item ID')
+    product_name = st.text_input('Enter Product Name')
+    product_model = st.text_input('Enter Product Model')
 
-# データのアップロード
-st.subheader("Upload Data to Cosmos DB")
-data_key = st.text_input("Enter a key:")
-data_value = st.text_input("Enter a value:")
+    if st.button('Upload to Cosmos DB'):
+        if item_id and product_name and product_model:
+            item = {
+                'id': item_id,
+                'productName': product_name,
+                'productModel': product_model
+            }
 
-if st.button("Upload"):
-    item_body = {
-        "id": data_key,
-        "value": data_value
-    }
-    client.UpsertItem("dbs/" + database_id + "/colls/" + container_id,item_body)
-    st.success(f"Uploaded data with key: {data_key}")
+            # アイテムをCosmos DBにアップロード
+            client.UpsertItem("dbs/" + DATABASE_ID + "/colls/" + COLLECTION_ID, item)
+            st.success('Data uploaded successfully!')
+        else:
+            st.error('Please fill all fields.')
+
+if __name__ == "__main__":
+    main()
