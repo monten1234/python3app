@@ -71,11 +71,5 @@ if st.button("Upload"):
                 'productModel': 'Model {0}'.format(i)
             }
     )
-    # item_body = {
-    #     "id": data_key,
-    #     "value": data_value
-    # }
-    # client.UpsertItem("dbs/" + database_id + "/colls/" + container_id,item_body)
-    # st.success(f"Uploaded data with key: {data_key}")
 
 
